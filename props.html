@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React공부</title>
+</head>
+
+<body>
+    <div id="root"></div>
+
+</body>
+
+<script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+
+    function Btn({ name, big }) {
+        console.log(big);
+        return <button style={{
+            backgroundColor: "tomato",
+            color: "white",
+            padding: "10px 20px",
+            border: 0,
+            borderRadius: 10,
+            fontSize: big ? 20 : 10,
+        }}>{name}</button>;
+    }
+
+
+
+    function App() {
+
+        return (
+            <div>
+                <Btn name="가나다" big={true} />
+                <Btn name="마바사" big={false} />
+            </div>
+        )
+    }
+
+
+
+
+
+
+    const root = document.getElementById("root");
+    ReactDOM.render(<App />, root);
+
+    {/* 리액트 컴포넌트는 반드시 첫번째가 대문자 필수 */ }
+</script>
+
+
+</html>
