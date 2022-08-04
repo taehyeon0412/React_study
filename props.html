@@ -35,13 +35,18 @@
 
     const MemorizedBtn = React.memo(Btn);
 
+    MemorizedBtn.propTypes = {
+        name: PropTypes.string,
+        fontSize: PropTypes.number,
+    };
+
     function App() {
         const [value, setValue] = React.useState("가");
         const changeValue = () => setValue("눌러서 바뀜!");
         return (
             <div>
                 <MemorizedBtn name={value} onClick={changeValue} fontSize={25} />  {/*prop로 추가한 onClick은 아무변수명이나 가능 ex)banana */}
-                <MemorizedBtn name="나" fontSize={15} />
+                <MemorizedBtn name="나" fontSize="가나다" />
                 <MemorizedBtn name="다" />
                 <MemorizedBtn name="라" />
                 <MemorizedBtn name="마" />
