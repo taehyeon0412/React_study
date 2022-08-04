@@ -13,36 +13,42 @@
 
 </body>
 
-<script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script type="text/babel">
 
-    function Btn({ name, big }) {
-        console.log(big);
-        return <button style={{
-            backgroundColor: "tomato",
-            color: "white",
-            padding: "10px 20px",
-            border: 0,
-            borderRadius: 10,
-            fontSize: big ? 20 : 10,
-        }}>{name}</button>;
+    function Btn({ name, onClick, fontSize }) {
+        console.log(name, "렌더링 됨!")
+        return <button
+            onClick={onClick}
+            style={{
+                backgroundColor: "tomato",
+                color: "white",
+                padding: "10px 20px",
+                border: 0,
+                borderRadius: 10,
+                fontSize
+            }}>{name}</button>;
     }
 
-
+    const MemorizedBtn = React.memo(Btn);
 
     function App() {
-
+        const [value, setValue] = React.useState("가");
+        const changeValue = () => setValue("눌러서 바뀜!");
         return (
             <div>
-                <Btn name="가나다" big={true} />
-                <Btn name="마바사" big={false} />
+                <MemorizedBtn name={value} onClick={changeValue} fontSize={25} />  {/*prop로 추가한 onClick은 아무변수명이나 가능 ex)banana */}
+                <MemorizedBtn name="나" fontSize={15} />
+                <MemorizedBtn name="다" />
+                <MemorizedBtn name="라" />
+                <MemorizedBtn name="마" />
+
             </div>
         )
     }
-
-
 
 
 
