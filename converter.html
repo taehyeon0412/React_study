@@ -15,128 +15,41 @@
 <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-
 <script type="text/babel">
 
-    function MinutesToHours() {
-        const [amount, setAmount] = React.useState(0);
-        const [inverted, setInverted] = React.useState(false);
-        const onChange = (event) => {
-            console.log(event.target.value);
-            setAmount(event.target.value);
-        }
-        const reset = () => setAmount(0);
-        const onFlip = () => {
-            setInverted((current) => !current);
-            //전환 버튼을 눌렀을때 inverted의 현재상태의 반대가 됨
-            reset(); //전환했을때 0으로 만들어줌
-        };
+    function Btn({ name, btnClick }) {
 
         return (
-            <div>
-                <div>
-                    <label htmlFor="minutes">분</label>
-                    <input
-                        value={inverted ? amount * 60 : amount}
-                        id="minutes"
-                        placeholder="분"
-                        type="number"
-                        onChange={onChange}
-                        disabled={inverted}
-                    />
-                </div>
-
-                <div>
-                    <label htmlFor="hours">시간</label>
-                    <input
-                        value={inverted ? amount : amount / 60}
-                        //삼항연산자로 조건문을 써줌
-                        //만약 inverted 상태(false)라면 minutes의 값을 보여줌
-                        //inverted 상태가아니라면 변환된값을 보여줌
-                        id="hours"
-                        placeholder="시간"
-                        type="number"
-                        onChange={onChange}
-                        disabled={!inverted}
-                    //inverted의 초기값은 false이다
-                    />
-                </div>
-
-                <button onClick={reset}>리셋</button>
-                <button onClick={onFlip}>{inverted ? "시간->분" : "분->시간"}</button>
-            </div>
-        );
-    }
-
-    /* Miles -> km : amount * 1.609
-       km -> Miles : amount / 1.609 */
-    function KmToMiles() {
-        const [amount, setAmount] = React.useState(0);
-        const [inverted, setInverted] = React.useState(false);
-
-        const onChange = (event) => {
-            console.log(event.target.value);
-            setAmount(event.target.value);
-        }
-
-        const reset = () => setAmount(0);
-        const onFlip = () => {
-            setInverted((current) => (!current));
-            reset();
-        }
-        return (
-            <div>
-                <div>
-                    <label htmlFor="Km">Km</label>
-                    <input
-                        id="Km"
-                        type="number"
-                        placeholder="Km"
-                        onChange={onChange}
-                        disabled={inverted}
-                        value={inverted ? amount * 1.609 : amount}
-                    />
-                </div>
-
-                <div>
-                    <label htmlFor="Miles">Miles</label>
-                    <input
-                        id="Miles"
-                        type="number"
-                        placeholder="Miles"
-                        onChange={onChange}
-                        disabled={!inverted}
-                        value={inverted ? amount : amount / 1.609}
-                    />
-                </div>
-
-                <button onClick={reset}>리셋</button>
-                <button onClick={onFlip}>변환</button>
-            </div>
-        );
+            <button
+                onClick={btnClick} //onClick은 이벤트리스너 {btnClick}은 컴포넌트 이름
+                style={{
+                    backgroundColor: "tomato",
+                    color: "white",
+                    padding: "10px 20px",
+                    border: 0,
+                    borderRadius: 10,
+                }}
+            >
+                {name}
+            </button>
+        )
     }
 
     function App() {
-        const [selectValue, setSelectValue] = React.useState("1");
-        const onSelect = (event) => {
-            setSelectValue(event.target.value);
-        }
+        const [value, setValue] = React.useState("버튼눌러봐");
+        const btnClick = () => setValue("버튼 눌러서 바뀜");
+        const [value2, setValue2] = React.useState("2번째 버튼");
+        const btnClick2 = () => setValue2("2번째 버튼 바뀜");
+
         return (
             <div>
-                <div>
-                    <h1>Super Converter</h1>
-                    <select value={selectValue} onChange={onSelect}>
-                        <option value="0">시간 & 분 변환기</option>
-                        <option value="1">Km & Mile 변환기</option>
-                    </select>
-                    <hr />
-                    {/* {} 중괄호 안에서는 js식을 쓸 수 있다. */}
-                    {selectValue === "0" ? <MinutesToHours /> : null}
-                    {selectValue === "1" ? <KmToMiles /> : null}
-                </div>
+                <Btn name={value} btnClick={btnClick} />
+                {/* 여기 들어가는 name이나 btnClick은 이벤트리스너가 아닌
+                    단순한 컴포넌트의 이름이다 */}
+                <Btn name={value2} btnClick={btnClick2} />
             </div>
-        );
+        )
+
     }
 
 
