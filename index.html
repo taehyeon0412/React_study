@@ -1,143 +1,65 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>React공부</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
 
 <body>
     <div id="root"></div>
-
 </body>
 
-<script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
 
 <script type="text/babel">
-    const root = document.getElementById("root");
 
-    function MinutesToHours() {
-        const [amount, setAmount] = React.useState(0);
-        const [switched, setSwitched] = React.useState(false);
-        const changeEvent = (event) => {
-            setAmount(event.target.value);
+    function App() {
+        const [minutes, setMinutes] = React.useState(0);
+        const onChange = (event) => {
+            console.log(event.target.value);
+            setMinutes(event.target.value);
         }
-        const reset = () => setAmount(0);
-        const switchBtn = () => {
-            reset();
-            setSwitched(current => !current);
-
-        }
-
+        const reset = () => setMinutes(0);
         return (
-
             <div>
+                <h1>단위 계산기</h1>
+
                 <div>
                     <label htmlFor="minutes">분</label>
                     <input
-                        value={switched ? amount * 60 : amount}
+                        value={minutes}
                         id="minutes"
                         placeholder="분"
                         type="number"
-                        onChange={changeEvent}
-                        disabled={switched} />
+                        onChange={onChange}
+                    />
                 </div>
+
                 <div>
                     <label htmlFor="hours">시간</label>
                     <input
-                        value={switched ? amount : amount / 60}
+                        value={minutes / 60}
                         id="hours"
                         placeholder="시간"
                         type="number"
-                        onChange={changeEvent}
-                        disabled={!switched} />
-
-                </div>
-                <button onClick={reset}>Reset</button>
-                <button onClick={switchBtn}>switch</button>
-
-            </div>
-
-        )
-    }
-
-    function KmToMiles() {
-        const [amount, setAmount] = React.useState();
-        const [switched, setSwitched] = React.useState(false);
-        const reset = () => setAmount(0);
-        const changeEvent = (event) => {
-            setAmount(event.target.value);
-        }
-        const switchBtn = () => {
-            reset();
-            setSwitched(current => !current);
-        }
-        return (
-            <div>
-                <div>
-                    <label htmlFor="Km">Km</label>
-                    <input
-                        id="Km"
-                        type="number"
-                        value={switched ? amount * 1.609344 : amount}
-                        placeholder="Km"
-                        onChange={changeEvent}
-                        disabled={switched} //false
                     />
                 </div>
-                <div>
-                    <label htmlFor="Mile">Mile</label>
-                    <input
-                        id="Mile"
-                        type="number"
-                        value={switched ? amount : amount * 0.6}
-                        placeholder="Mile"
-                        onChange={changeEvent}
-                        disabled={!switched} //true
-                    />
-                </div>
-                <button onClick={reset}>Reset</button>
-                <button onClick={switchBtn}>switch</button>
-            </div >
-        )
-    }
 
-    function App() {
-        const [index, setIndex] = React.useState("1");
-        const onSelect = (event) => {
-            setIndex(event.target.value);
-        }
-        return (
-            <div>
-                <h1>Super Converter</h1>
-                <select value={index} onChange={onSelect}>
-                    <option value="xx">Select your units</option>
-                    <option value="0">Minutes & Hours</option>
-                    <option value="1">Km & Miles</option>
-                </select>
-                <hr />
-                {index === "xx" ? `Please Select your units` : null}
-                {index === "0" ? <MinutesToHours /> : null}
-                {index === "1" ? <KmToMiles /> : null}
+                <button onClick={reset}>리셋</button>
             </div>
-        )
+        );
     }
 
 
+    const root = document.getElementById("root");
+    ReactDOM.render(<App />, root); // render = 사용자한테 보여줌이라는 의미
 
-    ReactDOM.render(<App />, root);
-
-    {/* 리액트 컴포넌트는 반드시 첫번째가 대문자 필수 */ }
 </script>
-
-
-
-<!-- React useState 이해하기 -->
-<!-- Divide and Conquer 분할 정복 이해하기 -->
 
 </html>
