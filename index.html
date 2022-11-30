@@ -21,17 +21,18 @@
 
     function App() {
         const [amount, setAmount] = React.useState(0);
-        const [flipped, setFlipped] = React.useState(false);
+        const [inverted, setInverted] = React.useState(false);
         const onChange = (event) => {
             console.log(event.target.value);
             setAmount(event.target.value);
         }
         const reset = () => setAmount(0);
         const onFlip = () => {
-            setFlipped((current) => !current);
+            setInverted((current) => !current);
+            //전환 버튼을 눌렀을때 inverted의 현재상태의 반대가 됨
             reset(); //전환했을때 0으로 만들어줌
         };
-        //전환 버튼을 눌렀을때 flipped의 현재상태의 반대가 됨
+
         return (
             <div>
                 <h1>단위 계산기</h1>
@@ -39,33 +40,33 @@
                 <div>
                     <label htmlFor="minutes">분</label>
                     <input
-                        value={flipped ? amount * 60 : amount}
+                        value={inverted ? amount * 60 : amount}
                         id="minutes"
                         placeholder="분"
                         type="number"
                         onChange={onChange}
-                        disabled={flipped}
+                        disabled={inverted}
                     />
                 </div>
 
                 <div>
                     <label htmlFor="hours">시간</label>
                     <input
-                        value={flipped ? amount : amount / 60}
+                        value={inverted ? amount : amount / 60}
                         //삼항연산자로 조건문을 써줌
-                        //만약 flipped 상태(false)라면 minutes의 값을 보여줌
-                        //flipped 상태가아니라면 변환된값을 보여줌
+                        //만약 inverted 상태(false)라면 minutes의 값을 보여줌
+                        //inverted 상태가아니라면 변환된값을 보여줌
                         id="hours"
                         placeholder="시간"
                         type="number"
                         onChange={onChange}
-                        disabled={!flipped}
-                    //flipped의 초기값은 false이다
+                        disabled={!inverted}
+                    //inverted의 초기값은 false이다
                     />
                 </div>
 
                 <button onClick={reset}>리셋</button>
-                <button onClick={onFlip}>전환</button>
+                <button onClick={onFlip}>{inverted ? "시간->분" : "분->시간"}</button>
             </div>
         );
     }
