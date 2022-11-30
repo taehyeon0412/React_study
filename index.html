@@ -20,12 +20,18 @@
 <script type="text/babel">
 
     function App() {
-        const [minutes, setMinutes] = React.useState(0);
+        const [amount, setAmount] = React.useState(0);
+        const [flipped, setFlipped] = React.useState(false);
         const onChange = (event) => {
             console.log(event.target.value);
-            setMinutes(event.target.value);
+            setAmount(event.target.value);
         }
-        const reset = () => setMinutes(0);
+        const reset = () => setAmount(0);
+        const onFlip = () => {
+            setFlipped((current) => !current);
+            reset(); //전환했을때 0으로 만들어줌
+        };
+        //전환 버튼을 눌렀을때 flipped의 현재상태의 반대가 됨
         return (
             <div>
                 <h1>단위 계산기</h1>
@@ -33,25 +39,33 @@
                 <div>
                     <label htmlFor="minutes">분</label>
                     <input
-                        value={minutes}
+                        value={flipped ? amount * 60 : amount}
                         id="minutes"
                         placeholder="분"
                         type="number"
                         onChange={onChange}
+                        disabled={flipped}
                     />
                 </div>
 
                 <div>
                     <label htmlFor="hours">시간</label>
                     <input
-                        value={minutes / 60}
+                        value={flipped ? amount : amount / 60}
+                        //삼항연산자로 조건문을 써줌
+                        //만약 flipped 상태(false)라면 minutes의 값을 보여줌
+                        //flipped 상태가아니라면 변환된값을 보여줌
                         id="hours"
                         placeholder="시간"
                         type="number"
+                        onChange={onChange}
+                        disabled={!flipped}
+                    //flipped의 초기값은 false이다
                     />
                 </div>
 
                 <button onClick={reset}>리셋</button>
+                <button onClick={onFlip}>전환</button>
             </div>
         );
     }
